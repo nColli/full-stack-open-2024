@@ -1,18 +1,13 @@
 /* eslint-disable react/prop-types */
 const Header = (props) => {
+  console.log(props)
   return (
     <h1>{props.course}</h1>
   )
 }
-/*
-const Content = (props) => {
-  return (
-    <p>{props.part} {props.exercises}</p>
-  )
-}
-*/
 
 const Content = (props) => {
+  console.log(props)
   return (
     <div>
       <Part part={props.part[0]} exercise={props.exercise[0]}></Part>
@@ -23,12 +18,14 @@ const Content = (props) => {
 }
 
 const Part = (props) => {
+  console.log(props)
   return (
     <p>{props.part} {props.exercise}</p>
   )
 }
 
 const Total = (props) => {
+  console.log(props)
   let total = 0
   props.exercises.forEach(exercise => {
     total += exercise
