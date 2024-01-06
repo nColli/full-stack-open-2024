@@ -6,84 +6,50 @@ import './index.css'
 
 // eslint-disable-next-line react-refresh/only-export-components
 
-/*version 1: auto counter
-const App = (props) => {
-  return (
-    <h1>{props.contadorInicial}</h1>
-  )
-}
+const Counter = ({number}) => {
+  console.log("Counter render")
+  return <h1>{number}</h1>;
+};
 
-let contador = 0
-
-const refresh = () => {
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-      <App contadorInicial={contador}/>
-    </React.StrictMode>,
-  )
-}
-
-let time = 1000
-
-setInterval(() => {
-  contador++
-  refresh()
-  if (contador === 10) {
-    contador = 0
-  }
-},time)*/
-
-/* version 2: clock
-const App = (props) => {
-  return (
-    <h1>{props.hora} : {props.min} : {props.seg}</h1>
-  )
-}
-
-const refresh = (min,seg,hora) => {
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-      <App min={min} seg={seg} hora={hora}/>
-    </React.StrictMode>,
-  )
-}
-
-let min = 0, seg = 0, hora = 0
-
-setInterval(() => {
-  seg++
-  if (seg == 60) {
-    seg = 0
-    min++
-  }
-
-  if (min == 60) {
-    min = 0
-    hora++
-  }
-
-  if (hora == 25) {
-    hora = 0
-  }
-
-  refresh(min,seg,hora)
-},1000)*/
-
-//version 3: setInterval inside App component
 const App = () => {
-  const contador = useState(0);
+  const [contadorValue, updateContador] = useState(0);
 
-  const contadorValue = contador[0];
-  const updateContador = contador[1];
+  console.log("render")
 
-  setInterval(() => {
-    updateContador(contadorValue + 1)
-  }, 1000);
+  //helper function, cuando la llamo es sin parentisis porque le paso desde que comienza el parentesis, sino se hace loop infinito
+  function handleClick(incrementar) {
+    if (incrementar === true) {
+      updateContador(prevContador => {
+        return prevContador + 1
+      })
+    } else {
+      updateContador(prevContador => {
+        return prevContador - 1
+      })
+    } 
+  }
+
+  const handleClickReset = () => {
+    updateContador(0)
+  }
+
+  const isEven = contadorValue % 2 === 0
+  const mensajePar = isEven ? "Es par" : "Es impar" //ternaria
 
   return (
     <div>
       <h1>Valor del contador: </h1>
-      <h1>{contadorValue}</h1>
+      <Counter number={contadorValue}/>
+      <p>{mensajePar}</p>
+      <button onClick={() => handleClick(true)}> 
+        Incrementar
+      </button>
+      <button onClick={() => handleClick(false)}>
+        Decrementar
+      </button>
+      <button onClick={handleClickReset}>
+        Reset
+      </button>
     </div>
   );
 }
@@ -94,3 +60,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App/>
   </React.StrictMode>
 )
+
