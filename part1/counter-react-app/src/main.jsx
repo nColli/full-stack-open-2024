@@ -5,19 +5,40 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 
 const App = () => {
-    const [left, setLeft] = useState(0)
-    const [right, setRight] = useState(0)
+    // const [left, setLeft] = useState(0)
+    // const [right, setRight] = useState(0)
   
+    const [counters, setCounters] = useState({
+      left: 0,
+      right: 0
+    })
+
+    const handleClickLeft = () => {
+      const newCountersState = {
+        left: counters.left + 1,
+        right: counters.right
+      }
+      setCounters(newCountersState)
+    }
+
+    const handleClickRight = () => {
+      const newCountersState = {
+        left: counters.left,
+        right: counters.right + 1
+      }
+      setCounters(newCountersState)
+    }
+
     return (
       <div>
-        {left}
-        <button onClick={() => setLeft(left + 1)}>
+        {counters.left}
+        <button onClick={handleClickLeft}>
           left
         </button>
-        <button onClick={() => setRight(right + 1)}>
+        <button onClick={handleClickRight}>
           right
         </button>
-        {right}
+        {counters.right}
       </div>
     )
 }
