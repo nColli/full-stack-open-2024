@@ -4,15 +4,27 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
+const WarningNotUsed = () => {
+  return <h5>Counter not yet used</h5>
+}
+
+const ListOfClicks = ({clicks}) => {
+  return <p>{clicks.join(", ")}</p>
+}
+
+const INITIAL_COUNTER_STATE = () => {
+  return {
+    left: 0,
+    right: 0,
+    mensaje: 'Message from state'
+  }
+}
+
 const App = () => {
     // const [left, setLeft] = useState(0)
     // const [right, setRight] = useState(0)
   
-    const [counters, setCounters] = useState({
-      left: 0,
-      right: 0,
-      mensaje: 'Mensaje desde el estado'
-    });
+    const [counters, setCounters] = useState(INITIAL_COUNTER_STATE);
     const [clicks, setClicks] = useState([])
 
     const handleClickLeft = () => {
@@ -40,19 +52,31 @@ const App = () => {
       })
     };
 
+    const handleReset = () => {
+      setCounters(INITIAL_COUNTER_STATE);
+      setClicks([]);
+    }
+
     return (
       <div>
-        {counters.left}
-        <button onClick={handleClickLeft}>
-          left
-        </button>
-        <button onClick={handleClickRight}>
-          right
-        </button>
-        {counters.right}
-        <p>Total clicks {clicks.length}</p>
-        <p>{counters.mensaje}</p>
-        <p>{clicks.join(", ")}</p>
+          {counters.left}
+          <button onClick={handleClickLeft}>
+            left
+          </button>
+          <button onClick={handleClickRight}>
+            right
+          </button>
+          {counters.right}
+          <p>Total clicks {clicks.length}</p>
+          <button onClick={handleReset}>
+            Reset
+          </button>
+          <p>{counters.mensaje}</p>
+          {clicks.length === 0 ? (
+            <WarningNotUsed></WarningNotUsed>
+          ) : (
+            <ListOfClicks clicks={clicks}></ListOfClicks>
+          )}
       </div>
     )
 }
