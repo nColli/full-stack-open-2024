@@ -4,60 +4,88 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
-// eslint-disable-next-line react-refresh/only-export-components
+const WarningNotUsed = () => {
+  return <h5>Counter not yet used</h5>
+}
 
-const Counter = ({number}) => {
-  console.log("Counter render")
-  return <h1>{number}</h1>;
-};
+const ListOfClicks = ({clicks}) => {
+  return <p>{clicks.join(", ")}</p>
+}
+
+const INITIAL_COUNTER_STATE = () => {
+  return {
+    left: 0,
+    right: 0,
+    mensaje: 'Message from state'
+  }
+}
 
 const App = () => {
-  const [contadorValue, updateContador] = useState(0);
+    // const [left, setLeft] = useState(0)
+    // const [right, setRight] = useState(0)
+  
+    const [counters, setCounters] = useState(INITIAL_COUNTER_STATE);
+    const [clicks, setClicks] = useState([])
 
-  console.log("render")
+    const handleClickLeft = () => {
+      const newCountersState = {
+        ...counters, //spread operator: trae todo del obj y mod lo que quiero
+        left: counters.left + 1,
+      };
+      //NUNCA: counters.left++ xq es inmutable
+      setCounters(newCountersState)
 
-  //helper function, cuando la llamo es sin parentisis porque le paso desde que comienza el parentesis, sino se hace loop infinito
-  function handleClick(incrementar) {
-    if (incrementar === true) {
-      updateContador(prevContador => {
-        return prevContador + 1
+      setClicks(prevClicks => {
+        return prevClicks.concat('L')
       })
-    } else {
-      updateContador(prevContador => {
-        return prevContador - 1
+    };
+
+    const handleClickRight = () => {
+      const newCountersState = {
+        ...counters,
+        right: counters.right + 1,
+      }
+      setCounters(newCountersState)
+
+      setClicks(prevClicks => {
+        return [...prevClicks, 'R']
       })
-    } 
-  }
+    };
 
-  const handleClickReset = () => {
-    updateContador(0)
-  }
+    const handleReset = () => {
+      setCounters(INITIAL_COUNTER_STATE);
+      setClicks([]);
+    }
 
-  const isEven = contadorValue % 2 === 0
-  const mensajePar = isEven ? "Es par" : "Es impar" //ternaria
-
-  return (
-    <div>
-      <h1>Valor del contador: </h1>
-      <Counter number={contadorValue}/>
-      <p>{mensajePar}</p>
-      <button onClick={() => handleClick(true)}> 
-        Incrementar
-      </button>
-      <button onClick={() => handleClick(false)}>
-        Decrementar
-      </button>
-      <button onClick={handleClickReset}>
-        Reset
-      </button>
-    </div>
-  );
+    return (
+      <div>
+          {counters.left}
+          <button onClick={handleClickLeft}>
+            left
+          </button>
+          <button onClick={handleClickRight}>
+            right
+          </button>
+          {counters.right}
+          <p>Total clicks {clicks.length}</p>
+          <button onClick={handleReset}>
+            Reset
+          </button>
+          <p>{counters.mensaje}</p>
+          {clicks.length === 0 ? (
+            <WarningNotUsed></WarningNotUsed>
+          ) : (
+            <ListOfClicks clicks={clicks}></ListOfClicks>
+          )}
+      </div>
+    )
 }
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App/>
-  </React.StrictMode>
-)
-
+    <React.StrictMode>
+      <App/>
+    </React.StrictMode>
+  )
+  
+  
