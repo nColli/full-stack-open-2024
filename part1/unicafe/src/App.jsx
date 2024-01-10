@@ -2,33 +2,8 @@
 import { useState } from 'react'
 
 const Statistics = (props) => {
-  const handleGood = () => {
-    props.setGood(prevGood => {
-      return prevGood + 1
-    })
-    console.log('handle good')
-  }
-
-  const handleNeutral = () => {
-    props.setNeutral(prevNeutral => {
-      return prevNeutral + 1
-    })
-    console.log('handle neutral')
-  }
-  
-  const handleBad = () => {
-    props.setBad(prevBad => {
-      return prevBad + 1
-    })
-    console.log('handle bad')
-  }
-
   return (
     <div>
-      <h1>give feedback</h1>
-      <button onClick={handleGood}>good</button>
-      <button onClick={handleNeutral}>neutral</button>
-      <button onClick={handleBad}>bad</button>
       <h1>statistics</h1>
       <p>good {props.good}</p>
       <p>neutral {props.neutral}</p>
@@ -87,7 +62,7 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  /*
+  
   const handleGood = () => {
     setGood(prevGood => {
       return prevGood + 1
@@ -115,16 +90,8 @@ const App = () => {
       <button onClick={handleGood}>good</button>
       <button onClick={handleNeutral}>neutral</button>
       <button onClick={handleBad}>bad</button>
-      <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <Data good={good} neutral={neutral} bad={bad}></Data>
+      <Statistics good={good} neutral={neutral} bad={bad} ></Statistics>
     </div>
-  )*/
-
-  return (
-    <Statistics good={good} setGood={setGood} neutral={neutral} setNeutral={setNeutral} bad={bad} setBad={setBad}></Statistics>
   )
 }
 
