@@ -5,18 +5,28 @@ const Statistics = (props) => {
   return (
     <div>
       <h1>statistics</h1>
+      <table>
       <StatisticLine text='good' value={props.good}></StatisticLine>
       <StatisticLine text='neutral' value={props.neutral}></StatisticLine>
       <StatisticLine text='bad' value={props.bad}></StatisticLine>
+      </table>
       <Data good={props.good} neutral={props.neutral} bad={props.bad}></Data>
+      
     </div>
   )
 }
 
 
 const StatisticLine = (props) => {
+  /*
   return (
     <p>{props.text} {props.value}</p>
+  )*/
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
@@ -56,10 +66,10 @@ const Data = (props) => {
     )
   } else {
     return (
-      <div>
+      <table>
         <StatisticLine text='average' value={average()}></StatisticLine>
         <StatisticLine text='positive' value={positive() + ' %'}></StatisticLine>
-      </div>
+      </table>
     )
   }
   
