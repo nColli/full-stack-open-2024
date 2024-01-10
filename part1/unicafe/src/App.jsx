@@ -66,13 +66,21 @@ const Data = (props) => {
     return <p>positive {positive} %</p>
   }
 
-
-  return (
-    <div>
-      {average()}
-      {positive()}
-    </div>
-  )
+  if (getTotal() === 0) {
+    return (
+      <div>
+        <p>No feedback given</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        {average()}
+        {positive()}
+      </div>
+    )
+  }
+  
 }
 
 const App = () => {
