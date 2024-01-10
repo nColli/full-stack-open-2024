@@ -66,10 +66,10 @@ const Data = (props) => {
     )
   } else {
     return (
-      <table>
+      <div>
         <StatisticLine text='average' value={average()}></StatisticLine>
         <StatisticLine text='positive' value={positive() + ' %'}></StatisticLine>
-      </table>
+      </div>
     )
   }
   
