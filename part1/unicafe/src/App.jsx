@@ -58,38 +58,33 @@ const Data = (props) => {
   
 }
 
+
+const Button = (props) => {
+  const handleButton = () => {
+    props.setState(prevState => {
+      return prevState + 1
+    })
+    console.log('handle button')
+  }
+
+  return (
+    <button onClick={handleButton}>{props.name}</button>
+  )
+}
+
+
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  
-  const handleGood = () => {
-    setGood(prevGood => {
-      return prevGood + 1
-    })
-    console.log('handle good')
-  }
-
-  const handleNeutral = () => {
-    setNeutral(prevNeutral => {
-      return prevNeutral + 1
-    })
-    console.log('handle neutral')
-  }
-  
-  const handleBad = () => {
-    setBad(prevBad => {
-      return prevBad + 1
-    })
-    console.log('handle bad')
-  }
 
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleGood}>good</button>
-      <button onClick={handleNeutral}>neutral</button>
-      <button onClick={handleBad}>bad</button>
+      <Button setState={setGood} name='good'></Button>
+      <Button setState={setNeutral} name='neutral'></Button>
+      <Button setState={setBad} name='bad'></Button>
       <Statistics good={good} neutral={neutral} bad={bad} ></Statistics>
     </div>
   )
