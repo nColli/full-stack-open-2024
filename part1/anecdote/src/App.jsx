@@ -1,6 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 
+const Title = (props) => {
+  return (
+    <h1>{props.content}</h1>
+  )
+}
+
+const Description = (props) => {
+  return (
+    <p>{props.content}</p>
+  )
+}
+
 const MostVoted = (props) => {
   function indexMostVoted() {
     const maxVotes = Math.max(...props.votes)
@@ -21,6 +33,10 @@ const MostVoted = (props) => {
   return (
     <p>{anecdote}</p>
   )
+}
+
+const ButtonNext = () => {
+
 }
 
 const App = () => {
@@ -66,27 +82,16 @@ const App = () => {
 
     console.log(votes[selected])
   }
-  /*
-  const indexMostVoted = () => {
-    const maxVotes = Math.max(...votes)
-
-    console.log('max votes: ' + maxVotes)
-
-    return (
-      votes.indexOf(maxVotes)
-    )
-  }*/
 
   return (
     <div>
-      <h1>Anecdote of the day</h1>
-      {anecdotes[selected]}
-      <br />
-      <p>has {votes[selected]} votes</p>
+      <Title content='Anecdote of the day'/>
+      <Description content={anecdotes[selected]} />
+      <Description content={'has ' + votes[selected] + ' votes'} />
       <button onClick={handleVote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
-      <h1>Anecdote with most votes</h1>
-      <MostVoted votes={votes} anecdotes={anecdotes}></MostVoted>
+      <Title content='Anecdote with most votes'/>
+      <MostVoted votes={votes} anecdotes={anecdotes}/>
     </div>
   )
 }
