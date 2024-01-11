@@ -14,24 +14,20 @@ const Description = (props) => {
 }
 
 const MostVoted = (props) => {
-  function indexMostVoted() {
-    const maxVotes = Math.max(...props.votes)
+  const maxVotes = Math.max(...props.votes)
 
-    console.log('max votes: ' + maxVotes)
-
-    return (
-      props.votes.indexOf(maxVotes)
-    )
-  }
-
-  const index = indexMostVoted()
+  const index = props.votes.indexOf(maxVotes)
 
   console.log('index most voted: ' + index)
 
   const anecdote = props.anecdotes[index]
 
   return (
-    <p>{anecdote}</p>
+    <div>
+      <Description content={anecdote}/>
+      <Description content={'has ' + maxVotes + ' votes'}/>
+    </div>
+
   )
 }
 
