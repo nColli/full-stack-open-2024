@@ -1,5 +1,27 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 
+const MostVoted = (props) => {
+  function indexMostVoted() {
+    const maxVotes = Math.max(...props.votes)
+
+    console.log('max votes: ' + maxVotes)
+
+    return (
+      props.votes.indexOf(maxVotes)
+    )
+  }
+
+  const index = indexMostVoted()
+
+  console.log('index most voted: ' + index)
+
+  const anecdote = props.anecdotes[index]
+
+  return (
+    <p>{anecdote}</p>
+  )
+}
 
 const App = () => {
   const anecdotes = [
@@ -44,14 +66,27 @@ const App = () => {
 
     console.log(votes[selected])
   }
+  /*
+  const indexMostVoted = () => {
+    const maxVotes = Math.max(...votes)
+
+    console.log('max votes: ' + maxVotes)
+
+    return (
+      votes.indexOf(maxVotes)
+    )
+  }*/
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
       <br />
       <p>has {votes[selected]} votes</p>
       <button onClick={handleVote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <MostVoted votes={votes} anecdotes={anecdotes}></MostVoted>
     </div>
   )
 }
