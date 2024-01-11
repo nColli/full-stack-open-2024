@@ -31,8 +31,45 @@ const MostVoted = (props) => {
   )
 }
 
-const ButtonNext = () => {
+const ButtonNext = (props) => {
+  const handleNext = () => {
+    props.setSelected(prevSelected => {
+      let randomId;
 
+      do {
+        randomId = getRandomIntInclusive(0,props.anecdotes.length - 1)
+        console.log('randomId: ' + randomId)
+      } while (props.anecdotes.indexOf(prevSelected) === randomId);
+
+      return randomId
+    })
+  }
+
+  function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+  }
+
+  return (
+    <button onClick={handleNext}>next anecdote</button>
+  )
+}
+
+const ButtonVote = (props) => {
+  const handleVote = () => {
+    const copy = [...props.votes]
+
+    copy[props.selected] += 1
+
+    props.setVotes(copy)
+
+    console.log(props.votes[props.selected])
+  }
+
+  return (
+    <button onClick={handleVote}>vote</button>
+  )
 }
 
 const App = () => {
@@ -50,42 +87,13 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
-  const handleNext = () => {
-    setSelected(prevSelected => {
-      let randomId;
-
-      do {
-        randomId = getRandomIntInclusive(0,anecdotes.length - 1)
-        console.log('randomId: ' + randomId)
-      } while (anecdotes.indexOf(prevSelected) === randomId);
-
-      return randomId
-    })
-  }
-
-  function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-  }
-
-  const handleVote = () => {
-    const copy = [...votes]
-
-    copy[selected] += 1
-
-    setVotes(copy)
-
-    console.log(votes[selected])
-  }
-
   return (
     <div>
       <Title content='Anecdote of the day'/>
       <Description content={anecdotes[selected]} />
       <Description content={'has ' + votes[selected] + ' votes'} />
-      <button onClick={handleVote}>vote</button>
-      <button onClick={handleNext}>next anecdote</button>
+      <ButtonVote votes={votes} setSelected={setSelected} setVotes={setVotes} />
+      <ButtonNext setSelected={setSelected} anecdotes={anecdotes} />
       <Title content='Anecdote with most votes'/>
       <MostVoted votes={votes} anecdotes={anecdotes}/>
     </div>
