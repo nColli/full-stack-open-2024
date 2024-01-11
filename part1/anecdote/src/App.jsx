@@ -58,7 +58,7 @@ const ButtonNext = (props) => {
 
 const ButtonVote = (props) => {
   const handleVote = () => {
-    const copy = [...props.votes]
+    const copy = [...(props.votes)]
 
     copy[props.selected] += 1
 
@@ -92,7 +92,7 @@ const App = () => {
       <Title content='Anecdote of the day'/>
       <Description content={anecdotes[selected]} />
       <Description content={'has ' + votes[selected] + ' votes'} />
-      <ButtonVote votes={votes} setSelected={setSelected} setVotes={setVotes} />
+      <ButtonVote votes={votes} setSelected={setSelected} setVotes={setVotes} selected={selected}/>
       <ButtonNext setSelected={setSelected} anecdotes={anecdotes} />
       <Title content='Anecdote with most votes'/>
       <MostVoted votes={votes} anecdotes={anecdotes}/>
