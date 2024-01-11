@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -12,14 +13,16 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  const initializePoints = () => {
+  function initializePoints() {
     let points = []
     for (let i = 0; i < anecdotes.length; i++) {
       points[i] = 0;
+      console.log(points[i])
     }
+    return points
   }
 
-  const points = initializePoints;
+  const points = initializePoints();
 
   
 
@@ -47,14 +50,13 @@ const App = () => {
 
 
   const handleVote = () => {
-    /*
     const copy = [...points]
 
     copy[selected] += 1
 
-    points[selected] = copy[selected]*/
+    points[selected] = copy[selected]
 
-    points[selected] = points[selected] + 1
+    console.log(points[selected])
   }
   
 
