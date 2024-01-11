@@ -13,20 +13,8 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  function initializePoints() {
-    let points = []
-    for (let i = 0; i < anecdotes.length; i++) {
-      points[i] = 0;
-      console.log(points[i])
-    }
-    return points
-  }
-
-  const points = initializePoints();
-
-  
-
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
   const handleNext = () => {
     setSelected(prevSelected => {
@@ -39,7 +27,6 @@ const App = () => {
 
       return randomId
     })
-
   }
 
   function getRandomIntInclusive(min, max) {
@@ -48,23 +35,21 @@ const App = () => {
     return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
   }
 
-
   const handleVote = () => {
-    const copy = [...points]
+    const copy = [...votes]
 
     copy[selected] += 1
 
-    points[selected] = copy[selected]
+    setVotes(copy)
 
-    console.log(points[selected])
+    console.log(votes[selected])
   }
-  
 
   return (
     <div>
       {anecdotes[selected]}
       <br />
-      <p>has {points[selected]} votes</p>
+      <p>has {votes[selected]} votes</p>
       <button onClick={handleVote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
     </div>
