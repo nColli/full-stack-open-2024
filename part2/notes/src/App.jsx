@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 
@@ -23,6 +24,12 @@ const notes = [
   ]
 
 export default function App() {
+  if (typeof notes === 'undefined' || notes.length === 0) {
+    return (
+      <div> We don't have notes to show you </div>
+    )
+  }
+
   return (
     <div>
       <ul>
