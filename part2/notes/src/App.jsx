@@ -23,11 +23,13 @@ const notes = [
     },
 ]
 
-const Note = ({note}) => {
-  return <li key={note.id}>
-  <p>{note.content}</p>
+const Note = ({id,content,date}) => {
+  console.log(id,content,date);
+
+  return <li key={id}>
+  <p>{content}</p>
   <small>
-    <time>{note.date}</time>
+    <time>{date}</time>
   </small>
   </li>
 }
@@ -44,7 +46,7 @@ export default function App() {
   return (
     <div>
       <ul>
-        {notes.map((note) => <Note note={note}></Note>)}
+        {notes.map((note) => <Note key={note.id} id={note.id} content={note.content} date={note.date}/>)}
       </ul>
     </div>
   )
