@@ -21,7 +21,18 @@ const notes = [
       date: '2019-05-30T19:20:14.298Z',
       important: true,
     },
-  ]
+]
+
+const Note = ({note}) => {
+  return <li key={note.id}>
+  <p>{note.content}</p>
+  <small>
+    <time>{note.date}</time>
+  </small>
+  </li>
+}
+
+
 
 export default function App() {
   if (typeof notes === 'undefined' || notes.length === 0) {
@@ -33,9 +44,7 @@ export default function App() {
   return (
     <div>
       <ul>
-        {notes.map((note) => {
-          return <li key={note.id}>{note.content}</li>
-        })}
+        {notes.map((note) => <Note note={note}></Note>)}
       </ul>
     </div>
   )
