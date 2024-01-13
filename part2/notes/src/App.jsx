@@ -34,9 +34,9 @@ export default function App() {
 
   return (
     <div>
-      <ul>
-        {notes.map((note) => <Note key={note.id} id={note.id} content={note.content} date={note.date}/>)}
-      </ul>
+      <ol>
+        {notes.map((note) => <Note key={note.id} content={note.content} date={note.date}/>)}
+      </ol>
     </div>
   )
 }
