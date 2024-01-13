@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
+import { Note } from './Note.jsx'
 
 const notes = [
     {
@@ -22,18 +23,6 @@ const notes = [
       important: true,
     },
 ]
-
-const Note = ({id,content,date}) => {
-  console.log(id,content,date);
-
-  return <li key={id}>
-  <p>{content}</p>
-  <small>
-    <time>{date}</time>
-  </small>
-  </li>
-}
-
 
 
 export default function App() {
