@@ -7,43 +7,16 @@ const Header = (props) => {
 }
 
 const Content = (props) => {
-  console.log(props)
+  console.log('content: ', props)
 
   return (
     <div>
       {props.parts.map(elem => 
-      <p key={elem.id}>{elem.part} {elem.exercise}</p>)}
+      <p key={elem.id}>{elem.name} {elem.exercises}</p>
+      )}
     </div>
   )
-
-  //let cont = []
-  /*
-  props.parts.forEach(part => {
-    cont.push(<Part part={part.name} exercise={part.exercises}></Part>)
-  });
-
-  return (
-    <div>
-      {cont}
-    </div>
-  )
-*/
-/*
-  return (
-    <div>
-      <Part part={props.parts[0].name} exercise={props.parts[0].exercises}></Part>
-      <Part part={props.parts[1].name} exercise={props.parts[1].exercises}></Part>
-      <Part part={props.parts[2].name} exercise={props.parts[2].exercises}></Part>
-    </div>
-  )*/
 }
-/*
-const Part = (props) => {
-  console.log(props)
-  return (
-    <p>{props.part} {props.exercise}</p>
-  )
-}*/
 
 const Total = (props) => {
   console.log(props)
