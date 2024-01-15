@@ -11,7 +11,9 @@ function App({ initialNotes = [] }) {
     setNewNote(event.target.value)
   }
 
-  const handleClick = (event) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
     console.log('crear nota');
     const noteToAddToState = {
       id: notes.length + 1,
@@ -21,7 +23,12 @@ function App({ initialNotes = [] }) {
     };
     console.log(noteToAddToState);
 
-    setNotes(notes.concat(noteToAddToState));
+    //setNotes(notes.concat(noteToAddToState))
+    setNotes([
+      ...notes,
+      noteToAddToState
+    ]);
+
     setNewNote("");
   }
 
@@ -33,10 +40,10 @@ function App({ initialNotes = [] }) {
           <Note key={note.id} note={note} />
         )}
       </ol>
-      <div>
+      <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} value={newNote}/>
-        <button onClick={handleClick}>Submit note</button>
-      </div>
+        <button>Submit note</button>
+      </form>
     </div>
   )
 }
