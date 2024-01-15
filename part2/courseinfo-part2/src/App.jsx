@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 const Header = (props) => {
-  console.log(props)
+  //console.log(props)
   return (
     <h1>{props.course}</h1>
   )
 }
 
 const Content = (props) => {
-  console.log('content: ', props)
+  //console.log('content: ', props)
 
   return (
     <div>
@@ -19,11 +19,24 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
-  console.log(props)
+  //console.log(props)
+
+  /*
   let total = 0
   props.parts.forEach(part => {
     total += part.exercises
+  })*/
+
+  //total calculate with reduce
+  let exercises = []
+  props.parts.map(elem => exercises.push(elem.exercises))
+
+  let total = exercises.reduce((prev,next) => {
+    console.log('what is happening', prev, next)
+    return prev + next
   })
+
+
   return (
     <p>Number of exercises {total}</p>
   )
