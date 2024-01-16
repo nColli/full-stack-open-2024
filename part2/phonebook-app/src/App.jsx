@@ -8,7 +8,7 @@ const App = () => {
 
   const handleChange = (event) => {
     setNewName(event.target.value)
-    //console.log(event.target.value);
+    console.log(event.target.value);
   }
 
   const handleSubmit = (event) => {
@@ -19,14 +19,31 @@ const App = () => {
     const personToAddToState = {
       name: newName
     };
+
     console.log(personToAddToState);
 
-    setPersons(prevPersons => [
-      ...prevPersons,
-      personToAddToState
-    ])
+    
 
-    setNewName('');
+    let personsNames = []
+
+    persons.map((person) => personsNames.push(person.name))
+
+    console.log("find: ", personsNames.indexOf(newName))
+
+    if (personsNames.indexOf(newName) != -1) {
+
+      alert(`${newName} is already added to phonebook`)
+
+    } else {
+      console.log("add: ",newName);
+  
+      setPersons(prevPersons => [
+        ...prevPersons,
+        personToAddToState
+      ])
+    }
+
+    setNewName("");
   }
 
   return (
@@ -35,7 +52,7 @@ const App = () => {
 
       <form onSubmit={handleSubmit}>
         <div>
-          name: <input onChange={handleChange}/>
+          name: <input onChange={handleChange} value={newName}/>
         </div>
         <div>
           <button type="submit">add</button>
