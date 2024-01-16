@@ -31,20 +31,6 @@ const Persons = ({persons,nameFilter}) => {
     )
   } else {
     console.log("search:",nameFilter);
-    
-    let copyPersons = []
-
-    for (let i = 0; i < persons.length; i++) {
-      copyPersons[i] = JSON.parse(JSON.stringify(persons[i]));
-    }
-
-
-    copyPersons.map((copyPerson) => {
-      copyPerson.name = copyPerson.name.toLowerCase()
-    })
-
-    console.log("Original",persons);
-    console.log("Copy",copyPersons);
 
     let personsFinded = []
 
