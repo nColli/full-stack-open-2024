@@ -1,6 +1,66 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 
+const Filter = ({handleFilter}) => {
+  return <p>filter shown with<input onChange={handleFilter}/></p>
+}
+
+const PersonForm = ({handleSubmit,handleChangeName,newName,handleChangeNumber,newNumber}) => {
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        name: <input onChange={handleChangeName} value={newName}/>
+      </div>
+      <div>
+        number: <input onChange={handleChangeNumber} value={newNumber}/>
+      </div>
+      <div>
+        <button type="submit">add</button>
+      </div>
+    </form>
+  ) 
+}
+
+const Persons = ({persons,nameFilter}) => {
+  if ((nameFilter === '')) {
+    return (
+      <div>
+        {persons.map(person =>
+          <p key={person.name}>{person.name} {person.number}</p>  )}
+      </div>
+    )
+  } else {
+    console.log("search:",nameFilter);
+    
+    let copyPersons = []
+
+    for (let i = 0; i < persons.length; i++) {
+      copyPersons[i] = JSON.parse(JSON.stringify(persons[i]));
+    }
+
+
+    copyPersons.map((copyPerson) => {
+      copyPerson.name = copyPerson.name.toLowerCase()
+    })
+
+    console.log("Original",persons);
+    console.log("Copy",copyPersons);
+
+    let personsFinded = []
+
+    nameFilter = nameFilter.toLowerCase();
+    persons.map((person) => {if(person.name.toLowerCase().includes(nameFilter)) { personsFinded.push(person) }})
+
+    return (
+      <div>
+        {personsFinded.map(person =>
+          <p key={person.name}>{person.name} {person.number}</p>  )}
+      </div>
+    )
+  }
+  
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -63,59 +123,21 @@ const App = () => {
     setNameFilter(name)
   }
 
-  const Persons = ({persons,nameFilter}) => {
-    if (!(nameFilter === '')) {
-      console.log("search:",nameFilter);
-
-      let personsFinded = []
-
-      persons.map((person) => {if(person.name.includes(nameFilter)) { personsFinded.push(person) }})
-
-      persons = personsFinded; //overwriting para tener solo un return
-    }
-
-    return (
-      <div>
-        {persons.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>  )}
-      </div>
-    )
-  }
+  
 
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Filter handleFilter={handleFilter}/>
 
-      <p>filter shown with<input onChange={handleFilter}/></p>
+      <h3>add a new</h3>
+      <PersonForm handleSubmit={handleSubmit} handleChangeName={handleChangeName} newName={newName} handleChangeNumber={handleChangeNumber} newNumber={newNumber}/>
 
-      <h2>add a new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input onChange={handleChangeName} value={newName}/>
-        </div>
-        <div>
-          number: <input onChange={handleChangeNumber} value={newNumber}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-
-      <h2>Numbers</h2>
-      <Persons persons={persons} nameFilter={nameFilter}></Persons>
+      <h3>Numbers</h3>
+      <Persons persons={persons} nameFilter={nameFilter}/>
     </div>
   )
 }
 
 export default App
-
-/*
-
-<div>
-        {nameFilter===('') ? persons.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>  
-        ) : showPersonsFilter}
-
-      </div>
-*/
