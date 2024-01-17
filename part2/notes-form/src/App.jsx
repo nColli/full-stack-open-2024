@@ -6,6 +6,7 @@ import {Note} from './components/Note'
 function App({ initialNotes = [] }) {
   const [notes, setNotes] = useState(initialNotes)
   const [newNote, setNewNote] = useState('')
+  const [showAll, setShowAll] = useState(true)
 
   const handleChange = (event) => {
     setNewNote(event.target.value)
@@ -13,7 +14,7 @@ function App({ initialNotes = [] }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     console.log('crear nota');
     const noteToAddToState = {
       id: notes.length + 1,
@@ -24,21 +25,33 @@ function App({ initialNotes = [] }) {
     console.log(noteToAddToState);
 
     //setNotes(notes.concat(noteToAddToState))
-    setNotes([
-      ...notes,
+    setNotes(prevNotes => [
+      ...prevNotes,
       noteToAddToState
     ]);
 
     setNewNote("");
   }
 
+  const handleShowAll = () => {
+    setShowAll(() => !showAll)
+  }
+
   return (
     <div>
       <h1>Notes</h1>
+      <button onClick={handleShowAll}>
+        {showAll ? "Show only important" : "Show all"}
+      </button>
       <ol>
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
-        )}
+        {notes
+          .filter((note) => {
+            if (showAll === true) return true;
+            return note.important === true 
+          })
+          .map(note => 
+            <Note key={note.id} note={note} />
+          )}
       </ol>
       <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} value={newNote}/>
