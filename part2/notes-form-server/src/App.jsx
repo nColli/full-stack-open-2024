@@ -1,12 +1,32 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
 
-function App({ initialNotes = [] }) {
-  const [notes, setNotes] = useState(initialNotes)
+function App() {
+  const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
-  const [showAll, setShowAll] = useState(true)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    console.log('use effect');
+    setLoading(true)
+
+    setTimeout(() => {
+      console.log("ahora dentro!");
+      
+      //guarda una promise: promesa es un obj q guarda un valor futuro, en alg mom se resolvera
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => response.json())
+        .then(json => {
+          console.log('loading API notes');
+          setNotes(json)
+          setLoading(false)
+        })
+    },2000);
+    
+  }, [])
+
 
   const handleChange = (event) => {
     setNewNote(event.target.value)
@@ -32,22 +52,18 @@ function App({ initialNotes = [] }) {
     setNewNote("");
   }
 
-  const handleShowAll = () => {
-    setShowAll(() => !showAll)
-  }
+  console.log('render');
+
+  //if (notes.length === 0) return 'cargando ...'
 
   return (
     <div>
       <h1>Notes</h1>
-      <button onClick={handleShowAll}>
-        {showAll ? "Show only important" : "Show all"}
-      </button>
+      {
+        loading ? 'Cargando...' : ''
+      }
       <ol>
         {notes
-          .filter((note) => {
-            if (showAll === true) return true;
-            return note.important === true 
-          })
           .map(note => 
             <Note key={note.id} note={note} />
           )}
