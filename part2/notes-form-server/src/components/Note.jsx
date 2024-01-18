@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 
 export const Note = ({ note }) => {
-    const content = note.content
-    const date = note.date
+    const title = note.title
+    const body = note.body
 
     return (
         <li>
-            <p>{content}</p>
-            <small>{date}</small>
+            <p>{title}</p>
+            <small>{body}</small>
         </li>
     )
 }

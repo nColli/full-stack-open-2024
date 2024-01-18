@@ -18,9 +18,8 @@ function App({ initialNotes = [] }) {
     console.log('crear nota');
     const noteToAddToState = {
       id: notes.length + 1,
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random() < 0.5
+      body: newNote,
+      title: newNote
     };
     console.log(noteToAddToState);
 
