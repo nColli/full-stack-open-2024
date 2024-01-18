@@ -1,4 +1,45 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
+const Weather = ({ capital }) => {
+    const [weather, setWeather] = useState({
+        temp_c: null, 
+        condition: {
+            icon: "",
+            alt: ""
+        },
+        wind_mph: null, 
+        wind_dir:null
+    });
+
+    useEffect(() => {
+        console.log("use effect weather");
+        const key = '4043c101579c4fb180d203517241801'
+
+        axios
+        .get(`http://api.weatherapi.com/v1/current.json?key=${key}&q=${capital}`)
+        .then((response) => {
+            const { data } = response
+
+            setWeather(data.current)
+        });
+
+    }, [capital])
+    /*
+    const icon = weather.condition.icon;
+    const text = weather.condition.text*/
+
+    console.log('weather:',weather);
+
+
+    return <div>
+        <h2>Weather in {capital}</h2>
+        <p><strong>temperature:</strong> {weather.temp_c} Celsius</p>
+        <img src={weather.condition.icon} alt={weather.condition.text} />
+        <p><strong>wind:</strong> {weather.wind_mph} mph direction {weather.wind_dir}</p>
+    </div>
+}
 
 export const Countries = ({ countries, nameCountry, setNewCountrySearch }) => {
     const handleClick = (event) => {
@@ -43,6 +84,7 @@ export const Countries = ({ countries, nameCountry, setNewCountrySearch }) => {
                             })}
                         </ul>
                         <img src={country.flags.png} alt={country.flags.alt} />
+                        <Weather capital={country.capital}></Weather>
                     </div>
                 )
             } else {
