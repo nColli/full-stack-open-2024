@@ -4,27 +4,6 @@ import axios from 'axios'
 import './App.css'
 import { Countries } from './components/Countries'
 
-/*
-const Countries = ({ countries }) => {
-  console.log("search:",nameFilter);
-
-  let personsFinded = []
-
-  nameFilter = nameFilter.toLowerCase();
-  persons.map((person) => {if(person.name.toLowerCase().includes(nameFilter)) { personsFinded.push(person) }})
-
-  return (
-    <div>
-      {personsFinded.map(person =>
-        <p key={person.name}>{person.name} {person.number}</p>  )}
-    </div>
-  )
-
-  if (countries.length > 10) {
-    return <p>Too many matches. specify another filter</p>
-  }
-}*/
-
 
 function App() {
   const [countries, setCountries] = useState([])
