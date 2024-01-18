@@ -21,6 +21,7 @@ function App() {
 
   }, [])
 
+
   const handleChange = (event) => {
     console.log(event.target.value);
     setNewCountrySearch(event.target.value)
@@ -30,7 +31,7 @@ function App() {
     <div>
       find countries
       <input type="text" onChange={handleChange} />
-      <Countries countries={countries} nameCountry={newCountrySearch}/>
+      <Countries countries={countries} nameCountry={newCountrySearch} setNewCountrySearch={setNewCountrySearch}/>
     </div>
   )
 }

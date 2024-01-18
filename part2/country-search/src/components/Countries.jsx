@@ -1,5 +1,15 @@
 /* eslint-disable react/prop-types */
-export const Countries = ({ countries, nameCountry }) => {
+
+export const Countries = ({ countries, nameCountry, setNewCountrySearch }) => {
+    const handleClick = (event) => {
+        console.log(event);
+        const countryName = event.target.value
+
+        //pongo el buscador con el nombre del pais
+        setNewCountrySearch(countryName)
+    }
+
+
     if (nameCountry != '') {
         console.log("search",nameCountry);
 
@@ -33,15 +43,18 @@ export const Countries = ({ countries, nameCountry }) => {
                             })}
                         </ul>
                         <img src={country.flags.png} alt={country.flags.alt} />
-                        
                     </div>
                 )
             } else {
+                
                 return <div>
                     {countriesFilter.map((country) => {
-                        return <p key={country.name.common}>{country.name.common}</p>
+                        return <div key={country.name.common}>
+                            {country.name.common}
+                            <button value={country.name.common} onClick={handleClick}>show</button>
+                        </div> 
                     })}
-                </div>
+                    </div>
             }
     }
 }
