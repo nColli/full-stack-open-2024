@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
+import axios from 'axios'
 
 function App() {
   const [notes, setNotes] = useState([])
@@ -15,6 +16,16 @@ function App() {
     setTimeout(() => {
       console.log("ahora dentro!");
       
+      //using axios:
+      axios
+        .get("https://jsonplaceholder.typicode.com/posts")
+        .then((response) => {
+          const { data } = response;
+          setNotes(data)
+          setLoading(false)
+        });
+
+      /* old version
       //guarda una promise: promesa es un obj q guarda un valor futuro, en alg mom se resolvera
       fetch('https://jsonplaceholder.typicode.com/posts')
         .then(response => response.json())
@@ -23,6 +34,7 @@ function App() {
           setNotes(json)
           setLoading(false)
         })
+      */
     },2000);
     
   }, [])
