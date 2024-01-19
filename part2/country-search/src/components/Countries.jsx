@@ -21,14 +21,11 @@ const Weather = ({ capital }) => {
         .get(`http://api.weatherapi.com/v1/current.json?key=${key}&q=${capital}`)
         .then((response) => {
             const { data } = response
-
+            console.log("info api",response);
             setWeather(data.current)
         });
 
     }, [capital])
-    /*
-    const icon = weather.condition.icon;
-    const text = weather.condition.text*/
 
     console.log('weather:',weather);
 
