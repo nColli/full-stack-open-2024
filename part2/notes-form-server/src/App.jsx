@@ -49,17 +49,26 @@ function App() {
 
     console.log('crear nota');
     const noteToAddToState = {
-      id: notes.length + 1,
+      //id: notes.length+1, lo crea la api, esta en response
       body: newNote,
-      title: newNote
+      title: newNote,
+      userId: 1
     };
     console.log(noteToAddToState);
 
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", noteToAddToState)
+      .then(response => {
+        const { data } = response
+        setNotes(prevNotes => prevNotes.concat(data))
+      })
+
     //setNotes(notes.concat(noteToAddToState))
+    /*
     setNotes(prevNotes => [
       ...prevNotes,
       noteToAddToState
-    ]);
+    ]);*/
 
     setNewNote("");
   }
