@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
 import axios from 'axios'
+import { getAllNotes } from './services/getAllNotes'
 
 function App() {
   const [notes, setNotes] = useState([])
@@ -16,7 +17,12 @@ function App() {
     setTimeout(() => {
       console.log("ahora dentro!");
       
-      //using axios:
+      getAllNotes().then(notes => {
+        setNotes(notes)
+        setLoading(false)
+      });
+
+      /*using axios:
       axios
         .get("https://jsonplaceholder.typicode.com/posts")
         .then((response) => {
@@ -24,7 +30,7 @@ function App() {
           setNotes(data)
           setLoading(false)
         });
-
+        */
       /* old version
       //guarda una promise: promesa es un obj q guarda un valor futuro, en alg mom se resolvera
       fetch('https://jsonplaceholder.typicode.com/posts')
