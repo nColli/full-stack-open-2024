@@ -2,8 +2,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
-import axios from 'axios'
 import { getAllNotes } from './services/getAllNotes'
+import createNotes from './services/createNotes'
 
 function App() {
   const [notes, setNotes] = useState([])
@@ -62,11 +62,9 @@ function App() {
     };
     console.log(noteToAddToState);
 
-    axios
-      .post("https://jsonplaceholder.typicode.com/posts", noteToAddToState)
-      .then(response => {
-        const { data } = response
-        setNotes(prevNotes => prevNotes.concat(data))
+    createNotes(noteToAddToState)
+      .then(newNote => {
+        setNotes((prevNotes) => prevNotes.concat(newNote))
       })
 
     //setNotes(notes.concat(noteToAddToState))
