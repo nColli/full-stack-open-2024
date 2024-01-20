@@ -2,8 +2,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
-import { getAllNotes } from './services/getAllNotes'
-import createNotes from './services/createNotes'
+import { getAllNotes } from './services/notes/index'
+import createNotes from './services/notes/index'
 
 function App() {
   const [notes, setNotes] = useState([])
