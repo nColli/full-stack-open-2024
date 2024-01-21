@@ -11,18 +11,22 @@ function App() {
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
 
-  useEffect(() => {
-    console.log('use effect');
+  const hook = () => {
+    console.log('effect');
 
-    axios
-      .get('http://localhost:3001/notes')
-      .then(response => {
-        console.log('promesa');
-        const data = response.data
-        setNotes(data);
-      })
-  }, [])
+    const eventHandler = response => {
+      console.log('promise fulfilled');
+      const data = response.data
+      setNotes(data);
+    }
+
+    const promise = axios.get('http://localhost:3001/notes')
+    promise.then(eventHandler)
+  }
+
+  useEffect(hook, [])
   console.log('render',notes.length,'notes');
+
 
   const handleChange = (event) => {
     setNewNote(event.target.value)
