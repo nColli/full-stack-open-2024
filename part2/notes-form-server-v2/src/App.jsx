@@ -1,12 +1,28 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
+import axios from 'axios'
 
-function App({ initialNotes = [] }) {
-  const [notes, setNotes] = useState(initialNotes)
+
+
+function App() {
+  const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+
+  useEffect(() => {
+    console.log('use effect');
+
+    axios
+      .get('http://localhost:3001/notes')
+      .then(response => {
+        console.log('promesa');
+        const data = response.data
+        setNotes(data);
+      })
+  }, [])
+  console.log('render',notes.length,'notes');
 
   const handleChange = (event) => {
     setNewNote(event.target.value)
