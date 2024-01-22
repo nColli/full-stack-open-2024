@@ -31,7 +31,7 @@ function App() {
   const handleChange = (event) => {
     setNewNote(event.target.value)
   }
-
+  /*
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -51,6 +51,26 @@ function App() {
     ]);
 
     setNewNote("");
+  }
+  */
+
+  const addNote = event => {
+    event.preventDefault();
+
+    console.log("addNote",event);
+
+    const noteObject = {
+      content: newNote,
+      date: new Date(),
+      important: Math.random() > 0.5,
+    }
+
+    axios
+      .post('http://localhost:3001/notes', noteObject)
+      .then(response => {
+        setNotes(notes.concat(response.data))
+        setNewNote('')
+      })
   }
 
   const handleShowAll = () => {
@@ -73,7 +93,7 @@ function App() {
             <Note key={note.id} note={note} />
           )}
       </ol>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={addNote}>
         <input type="text" onChange={handleChange} value={newNote}/>
         <button>Submit note</button>
       </form>
