@@ -4,13 +4,15 @@ import personService from './services/persons.js'
 import Persons from './components/Persons.jsx'
 import { PersonForm } from './components/PersonForm.jsx'
 import { Filter } from './components/Filter.jsx'
-
+import Notification from './components/Notification.jsx'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [nameFilter, setNameFilter] = useState('')
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState(false)
 
   
   useEffect(() => {
@@ -74,6 +76,12 @@ const App = () => {
         .then(dataResponse => {
           setPersons(persons.concat(dataResponse))
           console.log(dataResponse);
+
+          setMessage(`Added ${newName}`)
+          setError(false)
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000);
         })
     }
 
@@ -85,13 +93,14 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} error={error}/>
       <Filter handleFilter={handleFilter}/>
 
       <h3>add a new</h3>
       <PersonForm handleSubmit={handleSubmit} handleChangeName={handleChangeName} newName={newName} handleChangeNumber={handleChangeNumber} newNumber={newNumber}/>
 
       <h3>Numbers</h3>
-      <Persons persons={persons} nameFilter={nameFilter} setPersons={setPersons}/>
+      <Persons persons={persons} nameFilter={nameFilter} setPersons={setPersons} setMessage={setMessage} setError={setError}/>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import personService from '../services/persons.js'
 
-const Persons = ({persons,nameFilter,setPersons}) => {
+const Persons = ({persons,nameFilter,setPersons, setMessage, setError}) => {
     const handleDelete = event => {
         console.log('delete', event.target.value);
 
@@ -16,6 +16,15 @@ const Persons = ({persons,nameFilter,setPersons}) => {
 
                     setPersons(persons.filter(person => person.id !== personDeleted.id))
                 })
+                .catch(() => {
+                        setMessage(`Information of ${personToDelete.name} has already been removed from server`)
+                        setError(true)
+
+                        setTimeout(() => {
+                            setMessage(null)
+                        }, 5000);
+                    }
+                )
         }
         
     }

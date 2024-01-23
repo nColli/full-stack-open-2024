@@ -1,29 +1,14 @@
 {
   "persons": [
     {
-      "id": "ff79",
-      "name": "Juan Perez",
-      "number": "54 11 3213 3233"
-    },
-    {
       "id": "7e23",
       "name": "Ricardo Bin",
       "number": "33 41 2332"
     },
     {
-      "id": "1517",
+      "id": "cfcf",
       "name": "Juan Perez",
-      "number": "11223344"
-    },
-    {
-      "id": "0c95",
-      "name": "Juan",
-      "number": "11"
-    },
-    {
-      "id": "96b4",
-      "name": "Juan",
-      "number": "11"
+      "number": "3322233"
     }
   ]
 }
