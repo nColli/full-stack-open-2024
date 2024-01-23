@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
 import axios from 'axios'
-
+import noteService from './services/notes'
 
 
 function App() {
@@ -14,14 +14,14 @@ function App() {
   const hook = () => {
     console.log('effect');
 
-    const eventHandler = response => {
+    const eventHandler = initialNotes => {
       console.log('promise fulfilled');
-      const data = response.data
-      setNotes(data);
+      setNotes(initialNotes);
     }
 
-    const promise = axios.get('http://localhost:3001/notes')
-    promise.then(eventHandler)
+    noteService
+      .getAll()
+      .then(eventHandler)
   }
 
   useEffect(hook, [])
@@ -65,10 +65,10 @@ function App() {
       important: Math.random() > 0.5,
     }
 
-    axios
-      .post('http://localhost:3001/notes', noteObject)
-      .then(response => {
-        setNotes(notes.concat(response.data))
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
         setNewNote('')
       })
   }
@@ -76,13 +76,20 @@ function App() {
   const toggleImportanceOf = (id) => {
     console.log(`importance of ${id} needs to be toggled`);
 
-    const url = `http://localhost:3001/notes/${id}`
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
 
-    axios.put(url, changedNote).then(response => {
-      setNotes(notes.map(note => note.id !== id ? note : response.data))
-    })
+    noteService
+      .update(id, changedNote)
+      .then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
+      .catch(error => {
+        alert(
+          `the note ${note.content} was already deleted from server`
+        )
+        setNotes(notes.filter(n => n.id !== id))
+      })
   }
 
 
