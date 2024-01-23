@@ -1,53 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import personService from './services/persons.js'
+import { Persons } from './components/Persons.jsx'
+import { PersonForm } from './components/PersonForm.jsx'
+import { Filter } from './components/Filter.jsx'
 
-const Filter = ({handleFilter}) => {
-  return <p>filter shown with<input onChange={handleFilter}/></p>
-}
-
-const PersonForm = ({handleSubmit,handleChangeName,newName,handleChangeNumber,newNumber}) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        name: <input onChange={handleChangeName} value={newName}/>
-      </div>
-      <div>
-        number: <input onChange={handleChangeNumber} value={newNumber}/>
-      </div>
-      <div>
-        <button type="submit">add</button>
-      </div>
-    </form>
-  ) 
-}
-
-const Persons = ({persons,nameFilter}) => {
-  if ((nameFilter === '')) {
-    return (
-      <div>
-        {persons.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>
-        )}
-      </div>
-    )
-  } else {
-    console.log("search:",nameFilter);
-
-    let personsFinded = []
-
-    nameFilter = nameFilter.toLowerCase();
-    persons.map((person) => {if(person.name.toLowerCase().includes(nameFilter)) { personsFinded.push(person) }})
-
-    return (
-      <div>
-        {personsFinded.map(person =>
-          <p key={person.id}>{person.name} {person.number}</p>  )}
-      </div>
-    )
-  }
-  
-}
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -66,6 +23,15 @@ const App = () => {
       })
   }, [])
 
+
+  //handle fuctions
+  //for filter persons
+  const handleFilter = (event) => {
+    const name = event.target.value
+    setNameFilter(name)
+  }
+
+  //for add person
   const handleChangeName = (event) => {
     setNewName(event.target.value)
     console.log(event.target.value);
@@ -75,7 +41,6 @@ const App = () => {
     setNewNumber(event.target.value)
     console.log(event.target.value);
   }
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -101,7 +66,7 @@ const App = () => {
 
     } else {
       console.log("add: ",newName,newNumber);
-      
+
       personService
         .create(personToAdd)
         .then(dataResponse => {
@@ -113,13 +78,6 @@ const App = () => {
     setNewName("");
     setNewNumber("");
   }
-
-  const handleFilter = (event) => {
-    const name = event.target.value
-    setNameFilter(name)
-  }
-
-  
 
 
   return (
