@@ -8,13 +8,16 @@ const Persons = ({persons,nameFilter,setPersons}) => {
         const id = event.target.value
         const personToDelete = persons.find(person => person.id === id)
 
-        personService
-            .deleteNumber(personToDelete)
-            .then(personDeleted => {
-                console.log('person deleted from server',personDeleted);
+        if (window.confirm(`Delete ${personToDelete.name} ?`)) {
+            personService
+                .deleteNumber(personToDelete)
+                .then(personDeleted => {
+                    console.log('person deleted from server',personDeleted);
 
-                setPersons(persons.filter(person => person.id !== personDeleted.id))
-            })
+                    setPersons(persons.filter(person => person.id !== personDeleted.id))
+                })
+        }
+        
     }
 
     if ((nameFilter === '')) {
