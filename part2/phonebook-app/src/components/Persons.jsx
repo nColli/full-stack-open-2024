@@ -1,11 +1,27 @@
 /* eslint-disable react/prop-types */
+import personService from '../services/persons.js'
 
-export const Persons = ({persons,nameFilter}) => {
+const Persons = ({persons,nameFilter,setPersons}) => {
+    const handleDelete = event => {
+        console.log('delete', event.target.value);
+
+        const id = event.target.value
+        const personToDelete = persons.find(person => person.id === id)
+
+        personService
+            .deleteNumber(personToDelete)
+            .then(personDeleted => {
+                console.log('person deleted from server',personDeleted);
+
+                setPersons(persons.filter(person => person.id !== personDeleted.id))
+            })
+    }
+
     if ((nameFilter === '')) {
       return (
         <div>
           {persons.map(person =>
-            <p key={person.name}>{person.name} {person.number}</p>
+            <p key={person.id}>{person.name} {person.number} <button onClick={handleDelete} value={person.id}>delete</button></p>
           )}
         </div>
       )
@@ -26,3 +42,5 @@ export const Persons = ({persons,nameFilter}) => {
     }
     
   }
+
+  export default Persons;

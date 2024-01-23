@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import personService from './services/persons.js'
-import { Persons } from './components/Persons.jsx'
+import Persons from './components/Persons.jsx'
 import { PersonForm } from './components/PersonForm.jsx'
 import { Filter } from './components/Filter.jsx'
 
@@ -34,12 +34,12 @@ const App = () => {
   //for add person
   const handleChangeName = (event) => {
     setNewName(event.target.value)
-    console.log(event.target.value);
+    //console.log(event.target.value);
   }
 
   const handleChangeNumber = (event) => {
     setNewNumber(event.target.value)
-    console.log(event.target.value);
+    //console.log(event.target.value);
   }
 
   const handleSubmit = (event) => {
@@ -89,7 +89,7 @@ const App = () => {
       <PersonForm handleSubmit={handleSubmit} handleChangeName={handleChangeName} newName={newName} handleChangeNumber={handleChangeNumber} newNumber={newNumber}/>
 
       <h3>Numbers</h3>
-      <Persons persons={persons} nameFilter={nameFilter}/>
+      <Persons persons={persons} nameFilter={nameFilter} setPersons={setPersons}/>
     </div>
   )
 }

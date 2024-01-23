@@ -12,10 +12,18 @@ const getAll = () => {
 const create = (person) => {
     return (
         axios
-            .post('http://localhost:3001/persons',person)
+            .post(baseUrl, person)
             .then(response => response.data)
     )
     
 }
 
-export default { getAll, create }
+const deleteNumber = (personToDelete) => {
+    return (
+        axios
+            .delete(`${baseUrl}/${personToDelete.id}`)
+            .then(response => response.data)
+    )
+}
+
+export default { getAll, create, deleteNumber }
