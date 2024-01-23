@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import personService from './services/persons.js'
 
 const Filter = ({handleFilter}) => {
@@ -43,7 +42,7 @@ const Persons = ({persons,nameFilter}) => {
     return (
       <div>
         {personsFinded.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>  )}
+          <p key={person.id}>{person.name} {person.number}</p>  )}
       </div>
     )
   }
@@ -83,12 +82,12 @@ const App = () => {
 
     console.log('new contact');
 
-    const personToAddToState = {
+    const personToAdd = {
       name: newName,
       number: newNumber
     };
 
-    console.log(personToAddToState);
+    console.log(personToAdd);
 
     let personsNames = []
 
@@ -102,14 +101,12 @@ const App = () => {
 
     } else {
       console.log("add: ",newName,newNumber);
-
-      axios
-        .post('http://localhost:3001/persons',personToAddToState)
-        .then((response) => {
-          setPersons(prevPersons => [
-            ...prevPersons,
-            response.data
-          ])
+      
+      personService
+        .create(personToAdd)
+        .then(dataResponse => {
+          setPersons(persons.concat(dataResponse))
+          console.log(dataResponse);
         })
     }
 

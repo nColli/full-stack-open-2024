@@ -9,4 +9,13 @@ const getAll = () => {
     )
 }
 
-export default { getAll }
+const create = (person) => {
+    return (
+        axios
+            .post('http://localhost:3001/persons',person)
+            .then(response => response.data)
+    )
+    
+}
+
+export default { getAll, create }
