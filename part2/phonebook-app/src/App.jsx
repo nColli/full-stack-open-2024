@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import personService from './services/persons.js'
 
 const Filter = ({handleFilter}) => {
   return <p>filter shown with<input onChange={handleFilter}/></p>
@@ -27,7 +28,8 @@ const Persons = ({persons,nameFilter}) => {
     return (
       <div>
         {persons.map(person =>
-          <p key={person.name}>{person.name} {person.number}</p>  )}
+          <p key={person.name}>{person.name} {person.number}</p>
+        )}
       </div>
     )
   } else {
@@ -57,12 +59,11 @@ const App = () => {
   
   useEffect(() => {
     console.log("use effect");
-    
-    axios
-      .get('http://localhost:3001/persons')
-      .then((Response) => {
-        const { data } = Response;
-        setPersons(data)
+
+    personService
+      .getAll()
+      .then(dataResponse => {
+        setPersons(dataResponse)
       })
   }, [])
 
@@ -101,11 +102,15 @@ const App = () => {
 
     } else {
       console.log("add: ",newName,newNumber);
-  
-      setPersons(prevPersons => [
-        ...prevPersons,
-        personToAddToState
-      ])
+
+      axios
+        .post('http://localhost:3001/persons',personToAddToState)
+        .then((response) => {
+          setPersons(prevPersons => [
+            ...prevPersons,
+            response.data
+          ])
+        })
     }
 
     setNewName("");
