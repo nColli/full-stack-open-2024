@@ -2,14 +2,15 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import {Note} from './components/Note' 
-import axios from 'axios'
 import noteService from './services/notes'
-
+import Notification from './components/Notification'
+import Footer from './components/Footer'
 
 function App() {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState( )
 
   const hook = () => {
     console.log('effect');
@@ -85,9 +86,13 @@ function App() {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
       .catch(error => {
-        alert(
-          `the note ${note.content} was already deleted from server`
+        setErrorMessage(
+          `the note "${note.content}" was already deleted from server`
         )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000);
+
         setNotes(notes.filter(n => n.id !== id))
       })
   }
@@ -100,6 +105,7 @@ function App() {
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMessage}/>
       <button onClick={handleShowAll}>
         {showAll ? "Show only important" : "Show all"}
       </button>
@@ -117,6 +123,7 @@ function App() {
         <input type="text" onChange={handleChange} value={newNote}/>
         <button>Submit note</button>
       </form>
+      <Footer />
     </div>
   )
 }

@@ -8,7 +8,7 @@ export const Note = ({ note, toggleImportance }) => {
         ? 'make not important' : 'make important'
 
     return (
-        <li>
+        <li className="note">
             <p>{content}</p>
             <small>{date}</small>
             <button onClick={toggleImportance}>{label}</button>
