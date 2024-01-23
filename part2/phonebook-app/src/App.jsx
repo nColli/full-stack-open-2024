@@ -58,13 +58,15 @@ const App = () => {
 
     persons.map((person) => personsNames.push(person.name))
 
+    let replace = true;
+
     console.log("find: ", personsNames.indexOf(newName))
 
-    if (personsNames.indexOf(newName) != -1) {
+    if (personsNames.indexOf(newName) != -1 && !window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+      replace = false;
+    }
 
-      alert(`${newName} is already added to phonebook`)
-
-    } else {
+    if (replace === true) {
       console.log("add: ",newName,newNumber);
 
       personService
