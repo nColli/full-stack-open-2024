@@ -26,4 +26,12 @@ const deleteNumber = (personToDelete) => {
     )
 }
 
-export default { getAll, create, deleteNumber }
+const updateNumber = (person) => {
+    return (
+        axios
+            .put((baseUrl + `/${person.id}`), person)
+            .then(response => response.data)
+    )
+}
+
+export default { getAll, create, deleteNumber, updateNumber }

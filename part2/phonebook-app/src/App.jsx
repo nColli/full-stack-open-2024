@@ -60,15 +60,41 @@ const App = () => {
 
     persons.map((person) => personsNames.push(person.name))
 
-    let replace = true;
-
     console.log("find: ", personsNames.indexOf(newName))
 
-    if (personsNames.indexOf(newName) != -1 && !window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-      replace = false;
+    if (personsNames.indexOf(newName) != -1 && window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+      const personWithId = {
+        id: persons[personsNames.indexOf(newName)].id,
+        name: newName,
+        number: newNumber
+      }
+
+      console.log('person with id',personWithId);
+
+      personService
+        .updateNumber(personWithId)
+        .then(dataResponse => {
+          console.log(dataResponse);
+          
+          let personsCopy = [];
+
+          persons.map((person) => {
+            if (person.id === dataResponse.id) {
+              person.number = dataResponse.number
+            }
+
+            personsCopy.push(person)
+          })
+
+          setPersons(personsCopy)
+
+          console.log('copy',personsCopy);
+
+          console.log(persons);
+        })
     }
 
-    if (replace === true) {
+    if (personsNames.indexOf(newName) === -1) {
       console.log("add: ",newName,newNumber);
 
       personService
